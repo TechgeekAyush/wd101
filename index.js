@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
     dobInput.setAttribute('min', minDate.toISOString().split('T')[0]);
     dobInput.setAttribute('max', maxDate.toISOString().split('T')[0]);
 
+    loadSavedData();
+
     document.getElementById('registrationForm').addEventListener('submit', function (event) {
         event.preventDefault();
         const name = document.getElementById('name').value;
@@ -39,6 +41,12 @@ document.addEventListener('DOMContentLoaded', function () {
             newRow.insertCell(4).textContent = entry.acceptTerms;
         });
     }
+
+    function loadSavedData() {
+        const savedData = JSON.parse(localStorage.getItem('registrationData')) || [];
+        populateTable(savedData);
+    }
+    
     document.getElementById('clearButton').addEventListener('click', function () {
         localStorage.removeItem('registrationData');
         populateTable([]);
